@@ -1,0 +1,129 @@
+================================================================================
+PROJECT FLOW & FILE ARCHITECTURE
+================================================================================
+
+This document describes the end-to-end data pipeline, the purpose of each script/file,
+and visual diagrams (Mermaid) that illustrate the logical flow and dependencies.
+
+--------------------------------------------------------------------------------
+1. High-Level Pipeline Overview
+--------------------------------------------------------------------------------
+The project proceeds through 5 key phases:
+Data Collection -> Hygiene/Cleaning -> Sentiment Scoring -> Aggregation -> Statistical Analysis.
+
+```mermaid
+flowchart TD
+    subgraph A ["Phase 0: Setup"]
+        cfg["Environment (Python 3.14, pandas, scipy)"]
+    end
+    subgraph B ["Phase 1: Collection"]
+        collect["collect_reddit_data.py"]
+        posts_raw["posts.csv (400 MB)"]
+        comments_raw["comments.csv (4.65 GB)"]
+    end
+    subgraph C ["Phase 2: Hygiene"]
+        clean["clean_reddit_data.py"]
+        posts_clean["posts_clean.csv (297 MB)"]
+        comments_clean["comments_clean.csv (3.38 GB)"]
+    end
+    subgraph D ["Phase 3: Sentiment"]
+        sentiment["analyze_sentiment_quarterly.py"]
+        quarterly_sentiment["quarterly_sentiment_vs_sales.csv"]
+    end
+    subgraph E ["Phase 4: Sales Reference"]
+        sales["quarterly_sales.csv"]
+    end
+    subgraph F ["Phase 5: Correlation & Impact"]
+        stats["analyze_correlation_and_impact.py"]
+        stats_results["statistical_analysis_results.csv"]
+    end
+    subgraph G ["Deliverables"]
+        report["sentiment_analysis_sales_impact_report.md"]
+        conclusions["conclusions.txt"]
+    end
+
+    cfg --> collect
+    collect --> posts_raw
+    collect --> comments_raw
+    posts_raw --> clean
+    comments_raw --> clean
+    clean --> posts_clean
+    clean --> comments_clean
+    posts_clean --> sentiment
+    comments_clean --> sentiment
+    sentiment --> quarterly_sentiment
+    quarterly_sentiment --> stats
+    sales --> stats
+    stats --> stats_results
+    stats_results --> report
+    stats_results --> conclusions
+```
+
+--------------------------------------------------------------------------------
+2. Detailed File Purpose
+--------------------------------------------------------------------------------
+| File / Script | Role | Key Outputs |
+|---|---|---|
+| collect_reddit_data.py | Ingests submissions and comments from 5 subreddits via Reddit/Pushshift partition windows. | data/posts.csv, data/comments.csv |
+| clean_reddit_data.py | Deduplicates entries, strips AutoMod/deleted content, filters blank submissions. | data/posts_clean.csv, data/comments_clean.csv |
+| analyze_sentiment_quarterly.py | Applies domain-adapted VADER (gaming slang lexicon + regex normalizers), aggregates compound scores, net sentiment, and volume by quarter. | data/quarterly_sentiment_vs_sales.csv |
+| quarterly_sales.csv | Baseline reference lookup table containing Sony official PS5 sales and Xbox consensus estimates across all 12 quarters. | data/quarterly_sales.csv |
+| analyze_correlation_and_impact.py | Computes Pearson & Spearman correlation, lag-1 causality tests, OLS regression (R^2), and market share vs. discourse share metrics. | data/statistical_analysis_results.csv |
+| sentiment_analysis_sales_impact_report.md | Full academic research report with methodology, statistical tables, and econometric discussion. | Brain artifact report |
+| conclusions.txt | Plain text summary of core research conclusions and numerical results. | conclusions.txt |
+
+--------------------------------------------------------------------------------
+3. Data Flow Diagram
+--------------------------------------------------------------------------------
+```mermaid
+flowchart LR
+    posts_raw["posts.csv"] --> clean["clean_reddit_data.py"]
+    comments_raw["comments.csv"] --> clean
+    clean --> posts_clean["posts_clean.csv"]
+    clean --> comments_clean["comments_clean.csv"]
+    posts_clean --> sentiment["analyze_sentiment_quarterly.py"]
+    comments_clean --> sentiment
+    sentiment --> quarterly_sentiment["quarterly_sentiment_vs_sales.csv"]
+    quarterly_sentiment --> stats["analyze_correlation_and_impact.py"]
+    sales["quarterly_sales.csv"] --> stats
+    stats --> stats_results["statistical_analysis_results.csv"]
+    stats_results --> report["sentiment_analysis_sales_impact_report.md"]
+    stats_results --> conclusions["conclusions.txt"]
+```
+
+--------------------------------------------------------------------------------
+4. Execution Sequence
+--------------------------------------------------------------------------------
+1. Ingestion:
+   python collect_reddit_data.py
+
+2. Hygiene & Deduplication:
+   python clean_reddit_data.py
+
+3. Sentiment Scoring & Quarterly Aggregation:
+   python analyze_sentiment_quarterly.py
+
+4. Statistical & Econometric Modeling:
+   python analyze_correlation_and_impact.py
+
+--------------------------------------------------------------------------------
+5. Project Directory Structure
+--------------------------------------------------------------------------------
+rp/
+|-- collect_reddit_data.py
+|-- clean_reddit_data.py
+|-- analyze_sentiment_quarterly.py
+|-- analyze_correlation_and_impact.py
+|-- conclusions.txt
+|-- project_flow.txt
+|-- data/
+|   |-- posts.csv
+|   |-- comments.csv
+|   |-- posts_clean.csv
+|   |-- comments_clean.csv
+|   |-- quarterly_sales.csv
+|   |-- quarterly_sentiment_vs_sales.csv
+|   |-- statistical_analysis_results.csv
+|   `-- progress.json
+`-- sentiment_analysis_sales_impact_report.md
+================================================================================

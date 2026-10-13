@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large datasets exceeding GitHub's 2 GiB limit
+data/comments.csv
+data/comments_clean.csv
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

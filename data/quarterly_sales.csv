@@ -1,0 +1,13 @@
+quarter,start_date,end_date,start_utc,end_utc,ps5_units_millions,xbox_units_millions,ps5_source,xbox_source
+2023-Q1,2023-01-01,2023-03-31,1672531200,1680307199,6.30,1.35,Sony Consolidated Financial Results (FY22 Q4),Industry Consensus Estimates (VGChartz / Ampere)
+2023-Q2,2023-04-01,2023-06-30,1680307200,1688169599,3.30,1.15,Sony Consolidated Financial Results (FY23 Q1),Industry Consensus Estimates (VGChartz / Ampere)
+2023-Q3,2023-07-01,2023-09-30,1688169600,1696118399,4.90,1.60,Sony Consolidated Financial Results (FY23 Q2),Industry Consensus Estimates (VGChartz / Ampere)
+2023-Q4,2023-10-01,2023-12-31,1696118400,1704067199,8.20,3.50,Sony Consolidated Financial Results (FY23 Q3),Industry Consensus Estimates (VGChartz / Ampere)
+2024-Q1,2024-01-01,2024-03-31,1704067200,1711929599,4.50,1.05,Sony Consolidated Financial Results (FY23 Q4),Industry Consensus Estimates (VGChartz / Ampere)
+2024-Q2,2024-04-01,2024-06-30,1711929600,1719791999,2.40,0.78,Sony Consolidated Financial Results (FY24 Q1),Industry Consensus Estimates (VGChartz / Ampere)
+2024-Q3,2024-07-01,2024-09-30,1719792000,1727740799,3.80,0.95,Sony Consolidated Financial Results (FY24 Q2),Industry Consensus Estimates (VGChartz / Ampere)
+2024-Q4,2024-10-01,2024-12-31,1727740800,1735689599,9.50,2.20,Sony Consolidated Financial Results (FY24 Q3),Industry Consensus Estimates (VGChartz / Ampere)
+2025-Q1,2025-01-01,2025-03-31,1735689600,1743465599,2.80,0.55,Sony Consolidated Financial Results (FY24 Q4),Industry Consensus Estimates (VGChartz / Ampere)
+2025-Q2,2025-04-01,2025-06-30,1743465600,1751327999,2.50,0.48,Sony Consolidated Financial Results (FY25 Q1),Industry Consensus Estimates (VGChartz / Ampere)
+2025-Q3,2025-07-01,2025-09-30,1751328000,1759276799,4.00,0.62,Sony Consolidated Financial Results (FY25 Q2),Industry Consensus Estimates (VGChartz / Ampere)
+2025-Q4,2025-10-01,2025-12-31,1759276800,1767225599,7.90,1.35,Sony Consolidated Financial Results (FY25 Q3),Industry Consensus Estimates (VGChartz / Ampere)
